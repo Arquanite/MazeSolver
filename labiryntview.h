@@ -17,9 +17,12 @@ public:
 
     Graf labirynt();
     void setLabirynt(Graf g);
-
-    QList<int> path();
     void setPath(QList<int> path);
+    void setVisitedList(QList<int> list);
+    void redraw();
+
+    bool editable() const;
+    void setEditable(bool editable);
 
 signals:
     void success();
@@ -41,7 +44,13 @@ private:
     QVector<MazeLine*> m_edges;
     QVector<MazeField*> m_fields;
 
-    enum Node{
+    Graf m_graf;
+    QList<int> m_path;
+    QList<int> m_visited;
+
+    bool m_editable = true;
+
+    enum Node {
         First,
         Second,
     };

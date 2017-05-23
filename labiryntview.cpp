@@ -14,9 +14,6 @@ LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) :
             m_scene->addItem(item);
             m_fields.append(item);
             connect(item, SIGNAL(typeChanged()), this, SLOT(typeChanged()));
-//            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(QString::number(m_width*i+j));
-//            label->setPos(mx*j+0.4*mx, mx*i+0.4*mx);
-//            m_scene->addItem(label);
         }
     }
     for(int i=1; i<m_width; i++){
@@ -54,6 +51,30 @@ LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) :
     edgeMode(true);
 }
 
+Graf LabiryntView::labirynt(){
+    return m_graf;
+}
+
+void LabiryntView::setLabirynt(Graf g){
+    m_graf = g;
+}
+
+void LabiryntView::setPath(QList<int> path){
+    setNormal();
+    m_path = path;
+    for(int i : path){
+        m_fields[i]->waitFor(FieldType::Path);
+    }
+}
+
+void LabiryntView::setVisitedList(QList<int> list){
+    setNormal();
+    m_visited = list;
+    for(MazeField *field : m_fields){
+        field->waitFor(FieldType::Visited);
+    }
+}
+
 void LabiryntView::setNormal(){
     setType(FieldType::Normal);
 }
@@ -88,4 +109,16 @@ void LabiryntView::edgeMode(bool active){
         line->setAcceptHoverEvents(active);
         line->setAcceptedMouseButtons(button);
     }
+}
+
+bool LabiryntView::editable() const {
+    return m_editable;
+}
+
+void LabiryntView::setEditable(bool editable){
+    qDebug()<<editable;
+    edgeMode(editable);
+    if(editable) setNormal();
+    setNormal();
+    m_editable = editable;
 }

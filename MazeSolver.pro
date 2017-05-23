@@ -27,12 +27,16 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     mazeline.cpp \
     mazefield.cpp \
-    labiryntview.cpp
+    labiryntview.cpp \
+    abstractalgorithm.cpp \
+    autisticsearch.cpp
 
 HEADERS  += mainwindow.h \
     mazeline.h \
     mazefield.h \
     graf.h \
-    labiryntview.h
+    labiryntview.h \
+    abstractalgorithm.h \
+    autisticsearch.h
 
 FORMS    += mainwindow.ui

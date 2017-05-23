@@ -76,6 +76,6 @@ void MazeLine::updateStyle(){
     animation->setDuration(duration);
     animation->setStartValue(color());
     animation->setEndValue(newColor);
-    animation->start();
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 //    qDebug()<<data(0).toInt()<<':'<<data(1).toInt();
 }

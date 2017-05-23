@@ -8,7 +8,9 @@
 enum class FieldType {
     Normal,
     Start,
-    End
+    End,
+    Path,
+    Visited
 };
 
 class MazeField : public QObject, public QGraphicsRectItem {

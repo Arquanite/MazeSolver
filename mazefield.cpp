@@ -19,8 +19,12 @@ void MazeField::setColor(QColor color){
 }
 
 void MazeField::waitFor(FieldType type){
+    if(m_type != FieldType::Start && m_type != FieldType::End && (type == FieldType::Visited || type == FieldType::Path)){
+        setType(type);
+        return;
+    }
     if(m_type == type) setType(FieldType::Normal);
-    if(m_type == FieldType::Normal) setType(type);
+    if(m_type == FieldType::Normal || m_type == FieldType::Path || m_type == FieldType::Visited) setType(type);
     if(!m_active) setType(type);
 }
 
@@ -42,6 +46,17 @@ void MazeField::setType(FieldType type){
         m_pressColor = QColor("#d24d2b");
         m_hoverColor = QColor("#e9a695"); // 75%
         break;
+
+    case FieldType::Path:
+        m_pressColor = QColor("#ffff00");
+        m_hoverColor = QColor("#ffff00");
+        m_active = true;
+        break;
+
+    case FieldType::Visited:
+        m_pressColor = QColor("#999999");
+        m_hoverColor = QColor("#999999");
+        break;
     }
     updateStyle();
 }
@@ -62,9 +77,10 @@ void MazeField::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
 void MazeField::mousePressEvent(QGraphicsSceneMouseEvent *event){
     Q_UNUSED(event);
     if(m_type != FieldType::Normal){
-        if(!m_pressed) m_active = !m_active;
+        bool prev = m_active;
+        m_active = true;
         m_pressed = true;
-        emit typeChanged();
+        if(!prev) emit typeChanged();
     }
     updateStyle();
 }
@@ -92,5 +108,5 @@ void MazeField::updateStyle(){
     animation->setDuration(duration);
     animation->setStartValue(color());
     animation->setEndValue(newColor);
-    animation->start();
+    animation->start(QAbstractAnimation::DeleteWhenStopped);
 }

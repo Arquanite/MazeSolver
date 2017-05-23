@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "labiryntview.h"
+#include "abstractalgorithm.h"
 
 namespace Ui {
 class MainWindow;
@@ -18,12 +19,16 @@ public:
 private:
     Ui::MainWindow *ui;
     LabiryntView *lw;
+    AbstractAlgorithm *m_algorithm = nullptr;
 
 public slots:
     void zoomIn();
     void zoomOut();
     void printMaze();
     void uncheck();
+    void tabClicked(int index);
+    void step();
+    void algorithmSelected();
 };
 
 #endif // MAINWINDOW_H
