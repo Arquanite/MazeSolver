@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QDebug>
 #include "autisticsearch.h"
+#include "dfsearch.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
@@ -82,8 +83,8 @@ void MainWindow::algorithmSelected(int index){
     AbstractAlgorithm *alg = nullptr;
     switch(index){
     case 0: // Depth first
-        m_algorithm = new AutisticSearch();
-        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        m_algorithm = new DFSearch();
+//        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
         break;
     case 1: // Breadth first
         m_algorithm = new AutisticSearch();
