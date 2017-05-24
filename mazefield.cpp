@@ -19,7 +19,8 @@ void MazeField::setColor(QColor color){
 }
 
 void MazeField::waitFor(FieldType type){
-    if(m_type != FieldType::Start && m_type != FieldType::End && (type == FieldType::Visited || type == FieldType::Path)){
+    if(type == FieldType::Normal && !m_active) setType(type);
+    else if(m_type != FieldType::Start && m_type != FieldType::End && (type == FieldType::Visited || type == FieldType::Path)){
         setType(type);
         return;
     }
@@ -109,4 +110,8 @@ void MazeField::updateStyle(){
     animation->setStartValue(color());
     animation->setEndValue(newColor);
     animation->start(QAbstractAnimation::DeleteWhenStopped);
+}
+
+FieldType MazeField::fieldType() const {
+    return m_type;
 }

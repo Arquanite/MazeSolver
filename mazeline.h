@@ -14,6 +14,9 @@ public:
     QColor color();
     void setColor(QColor color);
 
+    bool active() const;
+    void setActive(bool active);
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;

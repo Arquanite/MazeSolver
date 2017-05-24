@@ -1,22 +1,18 @@
 #include "abstractalgorithm.h"
 
-int AbstractAlgorithm::start() const
-{
+int AbstractAlgorithm::start() const {
     return m_start;
 }
 
-void AbstractAlgorithm::setStart(int start)
-{
+void AbstractAlgorithm::setStart(int start){
     m_start = start;
 }
 
-int AbstractAlgorithm::end() const
-{
+int AbstractAlgorithm::end() const {
     return m_end;
 }
 
-void AbstractAlgorithm::setEnd(int end)
-{
+void AbstractAlgorithm::setEnd(int end){
     m_end = end;
 }
 

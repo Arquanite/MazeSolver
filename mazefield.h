@@ -24,6 +24,8 @@ public:
 
     void waitFor(FieldType type);
 
+    FieldType fieldType() const;
+
 signals:
     void typeChanged();
 

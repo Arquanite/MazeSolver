@@ -24,7 +24,7 @@ public:
     virtual QList<int> visited();
 
     int start() const;
-    void setStart(int start);
+    virtual void setStart(int start);
     int end() const;
     void setEnd(int end);
 };

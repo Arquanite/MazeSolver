@@ -79,3 +79,12 @@ void MazeLine::updateStyle(){
     animation->start(QAbstractAnimation::DeleteWhenStopped);
 //    qDebug()<<data(0).toInt()<<':'<<data(1).toInt();
 }
+
+bool MazeLine::active() const {
+    return m_active;
+}
+
+void MazeLine::setActive(bool active){
+    m_active = active;
+    updateStyle();
+}

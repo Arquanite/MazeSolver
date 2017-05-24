@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QDebug>
 #include "autisticsearch.h"
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
@@ -20,6 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->buttonStep, SIGNAL(clicked(bool)), this, SLOT(step()));
     connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected()));
+    algorithmSelected();
 }
 
 void MainWindow::zoomIn(){
@@ -46,21 +48,32 @@ void MainWindow::uncheck(){
 void MainWindow::tabClicked(int index){
     if(index == 0) lw->setEditable(true);
     else {
-        m_algorithm->reset();
         lw->setEditable(false);
+        if(lw->start() == -1 || lw->end() == -1){
+            QMessageBox::warning(this, "STAPH!!1", "U CANT SOLVE WHEN U HAVE NOT START AND END NOT TOO!!11");
+            QTimer::singleShot(10, [=](){ui->tabWidget->setCurrentIndex(0);});
+        }
+        m_algorithm->reset();
+        m_algorithm->setGraph(lw->graph());
+        m_algorithm->setStart(lw->start());
+        m_algorithm->setEnd(lw->end());
     }
     uncheck();
 }
 
 void MainWindow::step(){
     qDebug()<<"Step";
-    m_algorithm->step();
+    if(m_algorithm->step()) QMessageBox::information(this, "Xdd", "Udao siem");
     lw->setPath(m_algorithm->path());
 }
 
 void MainWindow::algorithmSelected(){
+    qDebug()<<"select";
     delete m_algorithm;
     m_algorithm = new AutisticSearch();
+    m_algorithm->setStart(lw->start());
+    m_algorithm->setEnd(lw->end());
+    lw->setNormal();
 }
 
 MainWindow::~MainWindow(){

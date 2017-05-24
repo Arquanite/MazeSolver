@@ -15,14 +15,17 @@ class LabiryntView : public QObject {
 public:
     explicit LabiryntView(int x, int y, QGraphicsView *view, QObject *parent = 0);
 
-    Graf labirynt();
-    void setLabirynt(Graf g);
+    Graf graph();
+    void setGraph(Graf g);
     void setPath(QList<int> path);
     void setVisitedList(QList<int> list);
     void redraw();
 
     bool editable() const;
     void setEditable(bool editable);
+
+    int start();
+    int end();
 
 signals:
     void success();

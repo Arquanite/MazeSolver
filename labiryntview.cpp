@@ -14,6 +14,9 @@ LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) :
             m_scene->addItem(item);
             m_fields.append(item);
             connect(item, SIGNAL(typeChanged()), this, SLOT(typeChanged()));
+            QGraphicsSimpleTextItem *label = new QGraphicsSimpleTextItem(QString::number(m_width*i+j));
+            label->setPos(mx*j+0.4*mx, mx*i+0.4*mx);
+            m_scene->addItem(label);
         }
     }
     for(int i=1; i<m_width; i++){
@@ -51,11 +54,28 @@ LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) :
     edgeMode(true);
 }
 
-Graf LabiryntView::labirynt(){
+Graf LabiryntView::graph(){
+    m_graf.clear();
+    for(int i=0; i<m_width*m_height; i++){
+        m_graf.append(QList<int>());
+    }
+    for(MazeLine *l : m_edges){
+        if(!l->active()){
+            m_graf[l->data(First).toInt()].append(l->data(Second).toInt());
+            m_graf[l->data(Second).toInt()].append(l->data(First).toInt());
+        }
+    }
+    for(int i=0; i<m_graf.size(); i++){
+        QString lol;
+        for(int j=0; j<m_graf.at(i).size(); j++){
+            lol.append(QString::number(m_graf.at(i).at(j))+" ");
+        }
+        qDebug()<<i<<lol;
+    }
     return m_graf;
 }
 
-void LabiryntView::setLabirynt(Graf g){
+void LabiryntView::setGraph(Graf g){
     m_graf = g;
 }
 
@@ -118,7 +138,21 @@ bool LabiryntView::editable() const {
 void LabiryntView::setEditable(bool editable){
     qDebug()<<editable;
     edgeMode(editable);
-    if(editable) setNormal();
+    //if(editable) setNormal();
     setNormal();
     m_editable = editable;
+}
+
+int LabiryntView::start(){
+    for(int i=0; i<m_fields.size(); i++){
+        if(m_fields.at(i)->fieldType() == FieldType::Start) return i;
+    }
+    return -1;
+}
+
+int LabiryntView::end(){
+    for(int i=0; i<m_fields.size(); i++){
+        if(m_fields.at(i)->fieldType() == FieldType::End) return i;
+    }
+    return -1;
 }
