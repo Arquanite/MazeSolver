@@ -4,6 +4,7 @@
 #include <QTimer>
 #include <QDebug>
 #include "autisticsearch.h"
+#include "dfsearch.h"
 #include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
@@ -20,8 +21,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(tabClicked(int)));
 
     connect(ui->buttonStep, SIGNAL(clicked(bool)), this, SLOT(step()));
-    connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected()));
-    algorithmSelected();
+    connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
+    algorithmSelected(0);
 }
 
 void MainWindow::zoomIn(){
@@ -63,14 +64,43 @@ void MainWindow::tabClicked(int index){
 
 void MainWindow::step(){
     qDebug()<<"Step";
-    if(m_algorithm->step()) QMessageBox::information(this, "Xdd", "Udao siem");
+    switch (m_algorithm->step()) {
+    case AbstractAlgorithm::Finish:
+        QMessageBox::information(this, "Xdd", "Udao siem");
+        break;
+    case AbstractAlgorithm::Working:
+        break;
+    case AbstractAlgorithm::Lost:
+        QMessageBox::information(this, "o, nje", "THRERE IZ NO ESCAEP!!11");
+        break;
+    default:
+        QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania.");
+    }
     lw->setPath(m_algorithm->path());
 }
 
-void MainWindow::algorithmSelected(){
-    qDebug()<<"select";
-    delete m_algorithm;
-    m_algorithm = new AutisticSearch();
+void MainWindow::algorithmSelected(int index){
+    AbstractAlgorithm *alg = nullptr;
+    switch(index){
+    case 0: // Depth first
+        m_algorithm = new DFSearch();
+//        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        break;
+    case 1: // Breadth first
+        m_algorithm = new AutisticSearch();
+        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        break;
+    case 2: // Autistic first
+        m_algorithm = new AutisticSearch();
+        break;
+    default:
+        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        break;
+    }
+    if(alg != nullptr){
+        delete m_algorithm;
+        m_algorithm = new AutisticSearch();
+    }
     m_algorithm->setStart(lw->start());
     m_algorithm->setEnd(lw->end());
     lw->setNormal();

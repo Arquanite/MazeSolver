@@ -223,6 +223,9 @@
           </item>
           <item>
            <widget class="QComboBox" name="selectAlgorithm">
+            <property name="currentIndex">
+             <number>0</number>
+            </property>
             <item>
              <property name="text">
               <string>Depht First</string>

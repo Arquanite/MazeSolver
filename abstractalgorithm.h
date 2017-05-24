@@ -13,9 +13,15 @@ protected:
     int m_end = 0;
 
 public:
+    enum AlgorithmState {
+        Finish,
+        Lost,
+        Working
+    };
+
     virtual ~AbstractAlgorithm() {}
     virtual void reset();
-    virtual bool step() = 0;
+    virtual AlgorithmState step() = 0;
 
     virtual Graf graph();
     virtual void setGraph(const Graf &graph);
@@ -23,10 +29,10 @@ public:
     virtual QList<int> path();
     virtual QList<int> visited();
 
-    int start() const;
+    virtual int start() const;
     virtual void setStart(int start);
-    int end() const;
-    void setEnd(int end);
+    virtual int end() const;
+    virtual void setEnd(int end);
 };
 
 #endif // ABSTRACTALGORITHM_H
