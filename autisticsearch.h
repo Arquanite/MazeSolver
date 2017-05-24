@@ -9,7 +9,7 @@ private:
 public:
     AutisticSearch();
 public:
-    virtual bool step() override;
+    virtual AlgorithmState step() override;
     virtual void reset() override;
     virtual void setStart(int start) override;
 

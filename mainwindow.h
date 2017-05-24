@@ -28,7 +28,7 @@ public slots:
     void uncheck();
     void tabClicked(int index);
     void step();
-    void algorithmSelected();
+    void algorithmSelected(int index);
 };
 
 #endif // MAINWINDOW_H

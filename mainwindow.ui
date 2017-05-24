@@ -24,7 +24,7 @@
        </sizepolicy>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <widget class="QWidget" name="tabEdit">
        <attribute name="title">
@@ -223,6 +223,9 @@
           </item>
           <item>
            <widget class="QComboBox" name="selectAlgorithm">
+            <property name="currentIndex">
+             <number>2</number>
+            </property>
             <item>
              <property name="text">
               <string>Depht First</string>
