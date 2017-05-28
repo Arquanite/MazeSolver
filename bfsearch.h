@@ -15,6 +15,8 @@ public:
     void reset();
     AlgorithmState step();
     void setStart(int start);
+
+    void deleteDeadEnd(QList<int> list, int node);
 };
 
 #endif // BFSEARCH_H
