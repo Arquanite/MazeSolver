@@ -17,6 +17,8 @@ public:
     bool active() const;
     void setActive(bool active);
 
+    void toggle();
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;

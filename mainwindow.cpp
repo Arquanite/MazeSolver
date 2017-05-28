@@ -22,10 +22,13 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(tabClicked(int)));
 
-    connect(ui->buttonStep, SIGNAL(clicked(bool)), this, SLOT(step()));
+    connect(ui->buttonStep, &QPushButton::clicked, [=](){ m_canGo = false; step(); });
     connect(ui->buttonSolve, SIGNAL(clicked(bool)), this, SLOT(solve()));
     connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
+    connect(ui->selectSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(speedSelected(int)));
+    connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
     algorithmSelected(0);
+    speedSelected(2);
 }
 
 void MainWindow::zoomIn(){
@@ -56,6 +59,8 @@ void MainWindow::tabClicked(int index){
         if(lw->start() == -1 || lw->end() == -1){
             QMessageBox::warning(this, "STAPH!!1", "U CANT SOLVE WHEN U HAVE NOT START AND END NOT TOO!!11");
             QTimer::singleShot(10, [=](){ui->tabWidget->setCurrentIndex(0);});
+            lw->setEditable(true);
+            return;
         }
         m_algorithm->reset();
         m_algorithm->setGraph(lw->graph());
@@ -66,20 +71,19 @@ void MainWindow::tabClicked(int index){
 }
 
 bool MainWindow::step(){
-    qDebug()<<"Step";
     bool next = false;
     switch (m_algorithm->step()){
     case AbstractAlgorithm::Finish:
-        QMessageBox::information(this, "Xdd", "Udao siem");
+        QMessageBox::information(this, "Success", "Found a way to end!");
         break;
     case AbstractAlgorithm::Working:
         next = true;
         break;
     case AbstractAlgorithm::Lost:
-        QMessageBox::information(this, "o, nje", "THRERE IZ NO ESCAEP!!11");
+        QMessageBox::information(this, "No way to end!", "There is no way to end!");
         break;
     default:
-        QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania.");
+        QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania."); //do poprawy
     }
     lw->setPath(m_algorithm->path());
     lw->setVisitedList(m_algorithm->visited());
@@ -87,7 +91,10 @@ bool MainWindow::step(){
 }
 
 void MainWindow::solve(){
-    if(step() == true) QTimer::singleShot(100, [=](){ solve(); });
+    qDebug()<<m_canGo;
+    if(step() && m_canGo) QTimer::singleShot(m_delay, [this](){ solve(); });
+    m_canGo = true;
+    qDebug()<<m_canGo;
 }
 
 void MainWindow::algorithmSelected(int index){
@@ -119,6 +126,24 @@ void MainWindow::algorithmSelected(int index){
     m_algorithm->setStart(lw->start());
     m_algorithm->setEnd(lw->end());
     lw->setNormal();
+}
+
+void MainWindow::speedSelected(int index){
+    switch (index) {
+    case 0:
+        m_delay = 10;
+        break;
+    case 1:
+        m_delay = 100;
+        break;
+    case 2:
+        m_delay = 500;
+        break;
+    case 3:
+        m_delay = 1000;
+        break;
+    }
+    qDebug()<<"Delay:"<<m_delay;
 }
 
 MainWindow::~MainWindow(){

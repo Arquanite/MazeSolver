@@ -20,6 +20,8 @@ private:
     Ui::MainWindow *ui;
     LabiryntView *lw;
     AbstractAlgorithm *m_algorithm = nullptr;
+    int m_delay;
+    bool m_canGo = true;
 
 public slots:
     void zoomIn();
@@ -30,6 +32,7 @@ public slots:
     bool step();
     void solve();
     void algorithmSelected(int index);
+    void speedSelected(int index);
 };
 
 #endif // MAINWINDOW_H

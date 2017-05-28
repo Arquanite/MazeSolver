@@ -35,6 +35,7 @@ public slots:
     void setStart();
     void setEnd();
     void typeChanged();
+    void toggleRandomEdge();
 
 private:
     void setType(FieldType type);
