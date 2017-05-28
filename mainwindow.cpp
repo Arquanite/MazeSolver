@@ -5,6 +5,7 @@
 #include <QDebug>
 #include "autisticsearch.h"
 #include "dfsearch.h"
+#include "bfsearch.h"
 #include "randomfirst.h"
 #include <QMessageBox>
 
@@ -97,9 +98,7 @@ void MainWindow::algorithmSelected(int index){
         alg = new DFSearch();
         break;
     case 1: // Breadth first
-        alg = new AutisticSearch();
-        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
-        ui->selectAlgorithm->setCurrentIndex(0);
+        alg = new BFSearch();
         break;
     case 2: // Autistic first
         alg = new AutisticSearch();
