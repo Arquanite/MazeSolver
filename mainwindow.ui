@@ -34,6 +34,13 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
+           <widget class="QPushButton" name="buttonNew">
+            <property name="text">
+             <string>New</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="buttonLoad">
             <property name="text">
              <string>Load</string>
@@ -106,6 +113,16 @@
            </spacer>
           </item>
           <item>
+           <widget class="QPushButton" name="buttonRandom">
+            <property name="text">
+             <string>Random</string>
+            </property>
+            <property name="autoRepeat">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="buttonSetStart">
             <property name="text">
              <string>Set Start</string>
@@ -143,6 +160,13 @@
         <item>
          <layout class="QHBoxLayout" name="horizontalLayout_2">
           <item>
+           <widget class="QPushButton" name="buttonReset">
+            <property name="text">
+             <string>Reset</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="buttonSolve">
             <property name="text">
              <string>Solve</string>
@@ -153,13 +177,6 @@
            <widget class="QPushButton" name="buttonStep">
             <property name="text">
              <string>Step</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QPushButton" name="pushButton">
-            <property name="text">
-             <string>Reset</string>
             </property>
            </widget>
           </item>
@@ -229,7 +246,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="selectSpeed">
             <item>
              <property name="text">
               <string>Very fast (0s)</string>

@@ -85,7 +85,6 @@ void LabiryntView::setPath(QList<int> path){
 }
 
 void LabiryntView::setVisitedList(QList<int> list){
-    //setNormal();
     m_visited = list;
     for(int i : list){
         m_fields[i]->waitFor(FieldType::Visited);
@@ -116,6 +115,10 @@ void LabiryntView::typeChanged(){
     setNormal();
     edgeMode(true);
     emit success();
+}
+
+void LabiryntView::toggleRandomEdge(){
+    m_edges[qrand()%m_edges.size()]->toggle();
 }
 
 void LabiryntView::edgeMode(bool active){

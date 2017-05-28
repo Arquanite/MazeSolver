@@ -3,6 +3,7 @@
 #include <QPen>
 #include <QDebug>
 #include <QPropertyAnimation>
+#include <QTimer>
 
 MazeLine::MazeLine(int x, int y, int length, Qt::Orientation orientation){
     if(orientation == Qt::Vertical){
@@ -87,4 +88,9 @@ bool MazeLine::active() const {
 void MazeLine::setActive(bool active){
     m_active = active;
     updateStyle();
+}
+
+void MazeLine::toggle(){
+    m_hovered = true; updateStyle();
+    QTimer::singleShot(250, [=](){ m_hovered = false; m_active = !m_active; updateStyle();});
 }
