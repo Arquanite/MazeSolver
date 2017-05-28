@@ -10,6 +10,7 @@ void BFSearch::reset() {
 }
 
 AbstractAlgorithm::AlgorithmState BFSearch::step() {
+    if(m_queue.size() < 1) return Lost;
     if(m_queue.head() == m_end) {
         QList<int> temp;
         int node = m_preds.at(m_visited.indexOf(m_queue.head()));
