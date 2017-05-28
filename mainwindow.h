@@ -27,7 +27,8 @@ public slots:
     void printMaze();
     void uncheck();
     void tabClicked(int index);
-    void step();
+    bool step();
+    void solve();
     void algorithmSelected(int index);
 };
 

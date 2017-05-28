@@ -36,3 +36,5 @@ QList<int> AbstractAlgorithm::path(){
 QList<int> AbstractAlgorithm::visited(){
     return m_visited;
 }
+
+

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>631</width>
+    <width>817</width>
     <height>545</height>
    </rect>
   </property>
@@ -157,6 +157,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QPushButton" name="pushButton">
+            <property name="text">
+             <string>Reset</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <spacer name="horizontalSpacer_3">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
@@ -213,6 +220,37 @@
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Speed:</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
+             <property name="text">
+              <string>Very fast (0s)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Fast (0.1s)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Normal (0.5s)</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Slow (1s)</string>
+             </property>
+            </item>
+           </widget>
           </item>
           <item>
            <widget class="QLabel" name="label">

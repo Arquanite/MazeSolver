@@ -10,6 +10,7 @@
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
+    qsrand(time(NULL));
     lw = new LabiryntView(8, 5, ui->graphicsView);
     connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
     connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
@@ -22,6 +23,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(tabClicked(int)));
 
     connect(ui->buttonStep, SIGNAL(clicked(bool)), this, SLOT(step()));
+    connect(ui->buttonSolve, SIGNAL(clicked(bool)), this, SLOT(solve()));
     connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
     algorithmSelected(0);
 }
@@ -63,13 +65,15 @@ void MainWindow::tabClicked(int index){
     uncheck();
 }
 
-void MainWindow::step(){
+bool MainWindow::step(){
     qDebug()<<"Step";
-    switch (m_algorithm->step()) {
+    bool next = false;
+    switch (m_algorithm->step()){
     case AbstractAlgorithm::Finish:
         QMessageBox::information(this, "Xdd", "Udao siem");
         break;
     case AbstractAlgorithm::Working:
+        next = true;
         break;
     case AbstractAlgorithm::Lost:
         QMessageBox::information(this, "o, nje", "THRERE IZ NO ESCAEP!!11");
@@ -78,6 +82,12 @@ void MainWindow::step(){
         QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania.");
     }
     lw->setPath(m_algorithm->path());
+    lw->setVisitedList(m_algorithm->visited());
+    return next;
+}
+
+void MainWindow::solve(){
+    if(step() == true) QTimer::singleShot(100, [=](){ solve(); });
 }
 
 void MainWindow::algorithmSelected(int index){
@@ -85,11 +95,11 @@ void MainWindow::algorithmSelected(int index){
     switch(index){
     case 0: // Depth first
         alg = new DFSearch();
-//        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
         break;
     case 1: // Breadth first
         alg = new AutisticSearch();
         QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        ui->selectAlgorithm->setCurrentIndex(0);
         break;
     case 2: // Autistic first
         alg = new AutisticSearch();
@@ -103,8 +113,9 @@ void MainWindow::algorithmSelected(int index){
     }
     if(alg != nullptr){
         delete m_algorithm;
-        m_algorithm = new AutisticSearch();
+        m_algorithm = alg;
     }
+    m_algorithm->setGraph(lw->graph());
     m_algorithm->setStart(lw->start());
     m_algorithm->setEnd(lw->end());
     lw->setNormal();

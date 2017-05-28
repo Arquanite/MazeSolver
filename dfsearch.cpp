@@ -13,7 +13,6 @@ AbstractAlgorithm::AlgorithmState DFSearch::step(){
     for(int i=0; i<sasiedzi.size(); i++){
         if(!m_visited.contains(sasiedzi.at(i))){
             moved = true;
-//            m_visited.append(m_current);
             m_current = sasiedzi.at(i);
             m_path.append(m_current);
             m_visited.append(m_current);
@@ -21,7 +20,8 @@ AbstractAlgorithm::AlgorithmState DFSearch::step(){
         }
     }
     if(!moved){
-        m_path.pop_back();
+        if(m_path.size() < 2) return Lost;
+        m_path.pop_back();  
         m_current = m_path.at(m_path.size()-1);
     }
     qDebug()<<"Visited:"<<m_visited;

@@ -19,6 +19,7 @@ void MazeField::setColor(QColor color){
 }
 
 void MazeField::waitFor(FieldType type){
+    if(m_type == FieldType::Path && type == FieldType::Visited) return;
     if(type == FieldType::Normal && !m_active) setType(type);
     else if(m_type != FieldType::Start && m_type != FieldType::End && (type == FieldType::Visited || type == FieldType::Path)){
         setType(type);
@@ -55,8 +56,9 @@ void MazeField::setType(FieldType type){
         break;
 
     case FieldType::Visited:
-        m_pressColor = QColor("#999999");
-        m_hoverColor = QColor("#999999");
+        m_pressColor = QColor("#ccc");
+        m_hoverColor = QColor("#ccc");
+        m_active = true;
         break;
     }
     updateStyle();

@@ -10,13 +10,7 @@ private:
 
 public:
     DFSearch();
-
-    // AbstractAlgorithm interface
-public:
     AlgorithmState step();
-
-    // AbstractAlgorithm interface
-public:
     void setStart(int start);
 };
 

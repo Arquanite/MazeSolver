@@ -1,7 +1,5 @@
 #include "labiryntview.h"
 
-#include <QDebug>
-
 LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) : QObject(parent), m_width(x), m_height(y), m_view(view){
     m_scene = new QGraphicsScene(this);
     m_view->setScene(m_scene);
@@ -70,7 +68,6 @@ Graf LabiryntView::graph(){
         for(int j=0; j<m_graf.at(i).size(); j++){
             lol.append(QString::number(m_graf.at(i).at(j))+" ");
         }
-        qDebug()<<i<<lol;
     }
     return m_graf;
 }
@@ -88,10 +85,10 @@ void LabiryntView::setPath(QList<int> path){
 }
 
 void LabiryntView::setVisitedList(QList<int> list){
-    setNormal();
+    //setNormal();
     m_visited = list;
-    for(MazeField *field : m_fields){
-        field->waitFor(FieldType::Visited);
+    for(int i : list){
+        m_fields[i]->waitFor(FieldType::Visited);
     }
 }
 
@@ -136,7 +133,6 @@ bool LabiryntView::editable() const {
 }
 
 void LabiryntView::setEditable(bool editable){
-    qDebug()<<editable;
     edgeMode(editable);
     //if(editable) setNormal();
     setNormal();
