@@ -10,7 +10,10 @@ void BFSearch::reset() {
 }
 
 AbstractAlgorithm::AlgorithmState BFSearch::step() {
-    if(m_queue.size() < 1) return Lost;
+    if(m_queue.size() < 1) {
+        m_path.clear();
+        return Lost;
+    }
     if(m_queue.head() == m_end) {
         QList<int> temp;
         int node = m_preds.at(m_visited.indexOf(m_queue.head()));
@@ -36,11 +39,17 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
         }
     }
     if(!moved) {
-        if(m_path.size() < 2) return Lost;
+        if(m_path.size() < 2) {
+            m_path.clear();
+            return Lost;
+        }
         m_path.removeAll(current);
         sasiedzi = m_graph.at(m_preds.at(m_visited.indexOf(current)));
         deleteDeadEnd(sasiedzi, current);
-        if (m_path.size() == 0) return Lost;
+        if (m_path.size() == 0) {
+            m_path.clear();
+            return Lost;
+        }
         current = m_path.at(m_path.size()-1);
     }
     if(current == m_end) {
@@ -53,7 +62,6 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
         m_path = temp;
         return Finish;
     }
-    if(m_queue.size() == 0) return Lost;
     qDebug()<<"pociong:"<< m_queue;
     qDebug()<<"ścieżga:"<< m_path;
     qDebug()<<"Visited:"<< m_visited;
