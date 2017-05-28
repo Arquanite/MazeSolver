@@ -10,7 +10,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     qsrand(time(NULL));
-    lw = new LabiryntView(28, 15, ui->graphicsView);
+    lw = new LabiryntView(8, 5, ui->graphicsView);
     connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
     connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
     connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
