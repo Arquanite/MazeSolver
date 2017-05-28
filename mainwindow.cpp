@@ -2,7 +2,6 @@
 #include "ui_mainwindow.h"
 
 #include <QTimer>
-#include <QDebug>
 #include "autisticsearch.h"
 #include "dfsearch.h"
 #include "bfsearch.h"
@@ -12,7 +11,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     qsrand(time(NULL));
-    lw = new LabiryntView(8, 5, ui->graphicsView);
+    lw = new LabiryntView(28, 15, ui->graphicsView);
     connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
     connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
     connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
@@ -21,15 +20,17 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->buttonZoomIn_2, SIGNAL(clicked(bool)), this, SLOT(zoomIn()));
     connect(ui->buttonZoomOut_2, SIGNAL(clicked(bool)), this, SLOT(zoomOut()));
 
-    connect(ui->tabWidget, SIGNAL(tabBarClicked(int)), this, SLOT(tabClicked(int)));
+    connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabClicked(int)));
 
-    connect(ui->buttonStep, &QPushButton::clicked, [=](){ m_canGo = false; step(); });
-    connect(ui->buttonSolve, SIGNAL(clicked(bool)), this, SLOT(solve()));
+    connect(ui->buttonStep, &QPushButton::clicked, [=](){ ui->buttonSolve->setEnabled(true); m_canGo = false; step(); });
+    connect(ui->buttonSolve, &QPushButton::clicked, [=](){ ui->buttonSolve->setEnabled(false); m_canGo = true; solve(); });
     connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
     connect(ui->selectSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(speedSelected(int)));
     connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
+    connect(ui->buttonReset, SIGNAL(clicked(bool)), this, SLOT(resetSearch()));
     algorithmSelected(0);
     speedSelected(2);
+    tabClicked(0);
 }
 
 void MainWindow::zoomIn(){
@@ -54,7 +55,10 @@ void MainWindow::uncheck(){
 }
 
 void MainWindow::tabClicked(int index){
-    if(index == 0) lw->setEditable(true);
+    if(index == 0){
+        lw->setEditable(true);
+        m_canGo = false;
+    }
     else {
         lw->setEditable(false);
         if(lw->start() == -1 || lw->end() == -1){
@@ -63,10 +67,7 @@ void MainWindow::tabClicked(int index){
             lw->setEditable(true);
             return;
         }
-        m_algorithm->reset();
-        m_algorithm->setGraph(lw->graph());
-        m_algorithm->setStart(lw->start());
-        m_algorithm->setEnd(lw->end());
+        resetSearch();
     }
     uncheck();
 }
@@ -76,12 +77,14 @@ bool MainWindow::step(){
     switch (m_algorithm->step()){
     case AbstractAlgorithm::Finish:
         QMessageBox::information(this, "Success", "Found a way to end!");
+        ui->buttonSolve->setEnabled(true);
         break;
     case AbstractAlgorithm::Working:
         next = true;
         break;
     case AbstractAlgorithm::Lost:
         QMessageBox::information(this, "No way to end!", "There is no way to end!");
+        ui->buttonSolve->setEnabled(true);
         break;
     default:
         QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania."); //do poprawy
@@ -92,10 +95,18 @@ bool MainWindow::step(){
 }
 
 void MainWindow::solve(){
-    qDebug()<<m_canGo;
-    if(step() && m_canGo) QTimer::singleShot(m_delay, [this](){ solve(); });
+    if(m_canGo && step()) QTimer::singleShot(m_delay, [this](){ solve(); });
     m_canGo = true;
-    qDebug()<<m_canGo;
+}
+
+void MainWindow::resetSearch(){
+    m_canGo = false;
+    m_algorithm->reset();
+    m_algorithm->setGraph(lw->graph());
+    m_algorithm->setStart(lw->start());
+    m_algorithm->setEnd(lw->end());
+    lw->setEditable(false);
+    ui->buttonSolve->setEnabled(true);
 }
 
 void MainWindow::algorithmSelected(int index){
@@ -121,10 +132,7 @@ void MainWindow::algorithmSelected(int index){
         delete m_algorithm;
         m_algorithm = alg;
     }
-    m_algorithm->setGraph(lw->graph());
-    m_algorithm->setStart(lw->start());
-    m_algorithm->setEnd(lw->end());
-    lw->setNormal();
+    resetSearch();
 }
 
 void MainWindow::speedSelected(int index){
@@ -142,7 +150,6 @@ void MainWindow::speedSelected(int index){
         m_delay = 1000;
         break;
     }
-    qDebug()<<"Delay:"<<m_delay;
 }
 
 MainWindow::~MainWindow(){
