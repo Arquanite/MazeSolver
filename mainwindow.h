@@ -31,6 +31,7 @@ public slots:
     void tabClicked(int index);
     bool step();
     void solve();
+    void resetSearch();
     void algorithmSelected(int index);
     void speedSelected(int index);
 };
