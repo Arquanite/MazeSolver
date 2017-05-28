@@ -31,7 +31,8 @@ SOURCES += main.cpp\
     abstractalgorithm.cpp \
     autisticsearch.cpp \
     dfsearch.cpp \
-    randomfirst.cpp
+    randomfirst.cpp \
+    bfsearch.cpp
 
 HEADERS  += mainwindow.h \
     mazeline.h \
@@ -41,6 +42,7 @@ HEADERS  += mainwindow.h \
     abstractalgorithm.h \
     autisticsearch.h \
     dfsearch.h \
-    randomfirst.h
+    randomfirst.h \
+    bfsearch.h
 
 FORMS    += mainwindow.ui
