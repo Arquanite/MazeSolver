@@ -11,7 +11,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
     qsrand(time(NULL));
-    lw = new LabiryntView(8, 5, ui->graphicsView);
+    lw = new LabiryntView(28, 15, ui->graphicsView);
     connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
     connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
     connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
@@ -74,7 +74,10 @@ void MainWindow::tabClicked(int index){
 
 bool MainWindow::step(){
     bool next = false;
-    switch (m_algorithm->step()){
+    AbstractAlgorithm::AlgorithmState result = m_algorithm->step();
+    lw->setPath(m_algorithm->path());
+    lw->setVisitedList(m_algorithm->visited());
+    switch (result){
     case AbstractAlgorithm::Finish:
         QMessageBox::information(this, "Success", "Found a way to end!");
         ui->buttonSolve->setEnabled(true);
@@ -89,8 +92,6 @@ bool MainWindow::step(){
     default:
         QMessageBox::warning(this, "Wystąpił błąd!", "Algorytm nie działa tak jak powinien, skontaktuj się z twórcą oprogramowania."); //do poprawy
     }
-    lw->setPath(m_algorithm->path());
-    lw->setVisitedList(m_algorithm->visited());
     return next;
 }
 
