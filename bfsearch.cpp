@@ -39,6 +39,7 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
         m_path.removeAll(current);
         sasiedzi = m_graph.at(m_preds.at(m_visited.indexOf(current)));
         deleteDeadEnd(sasiedzi, current);
+        if (m_path.size() == 0) return Lost;
         current = m_path.at(m_path.size()-1);
     }
     if(current == m_end) {
@@ -51,6 +52,7 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
         m_path = temp;
         return Finish;
     }
+    if(m_queue.size() == 0) return Lost;
     qDebug()<<"pociong:"<< m_queue;
     qDebug()<<"ścieżga:"<< m_path;
     qDebug()<<"Visited:"<< m_visited;
