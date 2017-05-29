@@ -1,7 +1,6 @@
 #include "mazeline.h"
 
 #include <QPen>
-#include <QDebug>
 #include <QPropertyAnimation>
 #include <QTimer>
 

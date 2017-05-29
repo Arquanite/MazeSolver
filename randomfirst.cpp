@@ -1,5 +1,4 @@
 #include "randomfirst.h"
-#include <QDebug>
 
 RandomFirst::RandomFirst(){
 
@@ -12,7 +11,6 @@ AbstractAlgorithm::AlgorithmState RandomFirst::step(){
     for(int s :  m_graph.at(m_current)){
         if(!m_visited.contains(s)) sasiedzi.append(s);
     }
-    qDebug()<<m_current;
     if(!sasiedzi.empty()){
         int i = qrand()%sasiedzi.size();
         moved = true;
@@ -25,8 +23,6 @@ AbstractAlgorithm::AlgorithmState RandomFirst::step(){
         m_path.pop_back();
         m_current = m_path.at(m_path.size()-1);
     }
-    qDebug()<<"Visited:"<<m_visited;
-    qDebug()<<"Path:"<<m_path;
     if(m_current == m_end) return Finish;
     return Working;
 }

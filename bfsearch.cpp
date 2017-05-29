@@ -1,5 +1,4 @@
 #include "bfsearch.h"
-#include <QDebug>
 
 BFSearch::BFSearch() {}
 
@@ -54,10 +53,6 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
         return Finish;
     }
     if(m_queue.size() == 0) return Lost;
-    qDebug()<<"pociong:"<< m_queue;
-    qDebug()<<"ścieżga:"<< m_path;
-    qDebug()<<"Visited:"<< m_visited;
-    qDebug()<<"Poprzen:"<< m_preds;
     return Working;
 }
 

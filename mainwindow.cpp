@@ -2,11 +2,13 @@
 #include "ui_mainwindow.h"
 
 #include <QTimer>
-#include "autisticsearch.h"
+#include <QMessageBox>
+#include <QInputDialog>
+
 #include "dfsearch.h"
 #include "bfsearch.h"
 #include "randomfirst.h"
-#include <QMessageBox>
+
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow){
     ui->setupUi(this);
@@ -28,6 +30,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->selectSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(speedSelected(int)));
     connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
     connect(ui->buttonReset, SIGNAL(clicked(bool)), this, SLOT(resetSearch()));
+    connect(ui->buttonNew, SIGNAL(clicked(bool)), this, SLOT(newLabirynth()));
     algorithmSelected(0);
     speedSelected(2);
     tabClicked(0);
@@ -119,10 +122,7 @@ void MainWindow::algorithmSelected(int index){
     case 1: // Breadth first
         alg = new BFSearch();
         break;
-    case 2: // Autistic first
-        alg = new AutisticSearch();
-        break;
-    case 3: // Random first
+    case 2: // Random first
         alg = new RandomFirst();
         break;
     default:
@@ -150,6 +150,18 @@ void MainWindow::speedSelected(int index){
     case 3:
         m_delay = 1000;
         break;
+    }
+}
+
+void MainWindow::newLabirynth(){
+    int w = QInputDialog::getInt(this, "Width", "Width plz");
+    int h = QInputDialog::getInt(this, "Height", "Height plz");
+    if(w > 0 && h > 0){
+        lw = new LabiryntView(w, h, ui->graphicsView);
+        connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
+        connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
+        connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
+        connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
     }
 }
 

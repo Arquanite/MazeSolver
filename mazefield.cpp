@@ -1,7 +1,6 @@
 #include "mazefield.h"
 
 #include <QPen>
-#include <QDebug>
 
 MazeField::MazeField(int x, int y, int size) : QGraphicsRectItem(x+3, y+3, size-6, size-6){
     setAcceptHoverEvents(true);

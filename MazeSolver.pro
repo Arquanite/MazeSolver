@@ -29,7 +29,6 @@ SOURCES += main.cpp\
     mazefield.cpp \
     labiryntview.cpp \
     abstractalgorithm.cpp \
-    autisticsearch.cpp \
     dfsearch.cpp \
     randomfirst.cpp \
     bfsearch.cpp
@@ -40,7 +39,6 @@ HEADERS  += mainwindow.h \
     graf.h \
     labiryntview.h \
     abstractalgorithm.h \
-    autisticsearch.h \
     dfsearch.h \
     randomfirst.h \
     bfsearch.h

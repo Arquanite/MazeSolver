@@ -34,6 +34,7 @@ public slots:
     void resetSearch();
     void algorithmSelected(int index);
     void speedSelected(int index);
+    void newLabirynth();
 };
 
 #endif // MAINWINDOW_H
