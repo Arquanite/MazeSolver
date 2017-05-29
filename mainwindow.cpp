@@ -65,7 +65,7 @@ void MainWindow::tabClicked(int index){
     else {
         lw->setEditable(false);
         if(lw->start() == -1 || lw->end() == -1){
-            QMessageBox::warning(this, "STAPH!!1", "U CANT SOLVE WHEN U HAVE NOT START AND END NOT TOO!!11");
+            QMessageBox::warning(this, "Warning", "You cannot solve without both start and end selected.");
             QTimer::singleShot(10, [=](){ui->tabWidget->setCurrentIndex(0);});
             lw->setEditable(true);
             return;
@@ -82,14 +82,14 @@ bool MainWindow::step(){
     lw->setVisitedList(m_algorithm->visited());
     switch (result){
     case AbstractAlgorithm::Finish:
-        QMessageBox::information(this, "Success", "Found a way to end!");
+        QMessageBox::information(this, "Success", "Found path to end tile!");
         ui->buttonSolve->setEnabled(true);
         break;
     case AbstractAlgorithm::Working:
         next = true;
         break;
     case AbstractAlgorithm::Lost:
-        QMessageBox::information(this, "No way to end!", "There is no way to end!");
+        QMessageBox::information(this, "No way to end!", "There is no path to end tile!");
         ui->buttonSolve->setEnabled(true);
         break;
     default:
@@ -126,7 +126,7 @@ void MainWindow::algorithmSelected(int index){
         alg = new RandomFirst();
         break;
     default:
-        QMessageBox::warning(this, "ACHTUNG!", "DER IZ NO SUCH ALGORITHM!!11");
+        QMessageBox::warning(this, "Warning", "There is no such algorithm");
         break;
     }
     if(alg != nullptr){
@@ -154,8 +154,8 @@ void MainWindow::speedSelected(int index){
 }
 
 void MainWindow::newLabirynth(){
-    int w = QInputDialog::getInt(this, "Width", "Width plz");
-    int h = QInputDialog::getInt(this, "Height", "Height plz");
+    int w = QInputDialog::getInt(this, "Width", "Please enter the labyrinth width");
+    int h = QInputDialog::getInt(this, "Height", "Please enter the labyrinth height");
     if(w > 0 && h > 0){
         lw = new LabiryntView(w, h, ui->graphicsView);
         connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
