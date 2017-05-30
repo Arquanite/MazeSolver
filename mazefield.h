@@ -26,6 +26,9 @@ public:
 
     FieldType fieldType() const;
 
+    void forceStart();
+    void forceEnd();
+
 signals:
     void typeChanged();
 

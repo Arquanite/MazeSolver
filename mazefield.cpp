@@ -116,3 +116,13 @@ void MazeField::updateStyle(){
 FieldType MazeField::fieldType() const {
     return m_type;
 }
+
+void MazeField::forceStart(){
+    m_active = true;
+    setType(FieldType::Start);
+}
+
+void MazeField::forceEnd(){
+    m_active = true;
+    setType(FieldType::End);
+}

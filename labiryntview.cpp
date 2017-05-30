@@ -119,9 +119,17 @@ void LabiryntView::setStart(){
     setType(FieldType::Start);
 }
 
+void LabiryntView::setStart(int index){
+    m_fields[index]->forceStart();
+}
+
 void LabiryntView::setEnd(){
     edgeMode(false);
     setType(FieldType::End);
+}
+
+void LabiryntView::setEnd(int index){
+    m_fields[index]->forceEnd();
 }
 
 void LabiryntView::setType(FieldType type){
@@ -150,13 +158,11 @@ void LabiryntView::edgeMode(bool active){
     }
 }
 
-int LabiryntView::height() const
-{
+int LabiryntView::height() const {
     return m_height;
 }
 
-int LabiryntView::width() const
-{
+int LabiryntView::width() const {
     return m_width;
 }
 

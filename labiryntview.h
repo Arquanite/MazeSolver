@@ -35,7 +35,9 @@ signals:
 public slots:
     void setNormal();
     void setStart();
+    void setStart(int index);
     void setEnd();
+    void setEnd(int index);
     void typeChanged();
     void toggleRandomEdge();
 

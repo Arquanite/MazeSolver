@@ -80,7 +80,10 @@ bool MainWindow::step(){
     lw->setVisitedList(m_algorithm->visited());
     switch (result){
     case AbstractAlgorithm::Finish:
-        QMessageBox::information(this, "Success", "Found path to end tile!");
+        QMessageBox::information(this, "Success", QString("Found path to end tile!\n\n"
+                                                          "Visited tiles: %1\n"
+                                                          "Path length: %2"
+                                                          ).arg(m_algorithm->visited().size()).arg(m_algorithm->path().size()));
         ui->buttonSolve->setEnabled(true);
         break;
     case AbstractAlgorithm::Working:
@@ -175,7 +178,7 @@ void MainWindow::save(){
         return;
     }
     QDataStream out(&file);
-    out<<lw->width()<<lw->height()<<lw->graph();
+    out<<lw->width()<<lw->height()<<lw->graph()<<lw->start()<<lw->end();
     file.flush();
     file.close();
     return;
@@ -191,10 +194,12 @@ void MainWindow::load(){
         return;
     }
     QDataStream in(&file);
-    int width, height;
+    int width, height, start, end;
     Graf g;
-    in>>width>>height>>g;
+    in>>width>>height>>g>>start>>end;
     lw->setGraph(g, width, height);
+    lw->setStart(start);
+    lw->setEnd(end);
     file.close();
 }
 
