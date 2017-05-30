@@ -3,7 +3,9 @@
 
 #include <QTimer>
 #include <QMessageBox>
+#include <QFileDialog>
 #include <QInputDialog>
+#include <QStandardPaths>
 
 #include "dfsearch.h"
 #include "bfsearch.h"
@@ -14,23 +16,23 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->setupUi(this);
     qsrand(time(NULL));
     lw = new LabiryntView(8, 5, ui->graphicsView);
-    connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
-    connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
     connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
+    connect(ui->buttonLoad, SIGNAL(clicked(bool)), this, SLOT(load()));
+    connect(ui->buttonSave, SIGNAL(clicked(bool)), this, SLOT(save()));
+    connect(ui->buttonSetEnd, SIGNAL(clicked(bool)), lw, SLOT(setEnd()));
     connect(ui->buttonZoomIn, SIGNAL(clicked(bool)), this, SLOT(zoomIn()));
     connect(ui->buttonZoomOut, SIGNAL(clicked(bool)), this, SLOT(zoomOut()));
     connect(ui->buttonZoomIn_2, SIGNAL(clicked(bool)), this, SLOT(zoomIn()));
+    connect(ui->buttonSetStart, SIGNAL(clicked(bool)), lw, SLOT(setStart()));
+    connect(ui->buttonNew, SIGNAL(clicked(bool)), this, SLOT(newLabirynth()));
+    connect(ui->buttonReset, SIGNAL(clicked(bool)), this, SLOT(resetSearch()));
     connect(ui->buttonZoomOut_2, SIGNAL(clicked(bool)), this, SLOT(zoomOut()));
-
+    connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
     connect(ui->tabWidget, SIGNAL(currentChanged(int)), this, SLOT(tabClicked(int)));
-
+    connect(ui->selectSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(speedSelected(int)));
+    connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
     connect(ui->buttonStep, &QPushButton::clicked, [=](){ ui->buttonSolve->setEnabled(true); m_canGo = false; step(); });
     connect(ui->buttonSolve, &QPushButton::clicked, [=](){ ui->buttonSolve->setEnabled(false); m_canGo = true; solve(); });
-    connect(ui->selectAlgorithm, SIGNAL(currentIndexChanged(int)), this, SLOT(algorithmSelected(int)));
-    connect(ui->selectSpeed, SIGNAL(currentIndexChanged(int)), this, SLOT(speedSelected(int)));
-    connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
-    connect(ui->buttonReset, SIGNAL(clicked(bool)), this, SLOT(resetSearch()));
-    connect(ui->buttonNew, SIGNAL(clicked(bool)), this, SLOT(newLabirynth()));
     algorithmSelected(0);
     speedSelected(2);
     tabClicked(0);
@@ -42,10 +44,6 @@ void MainWindow::zoomIn(){
 
 void MainWindow::zoomOut(){
     ui->graphicsView->scale(0.9, 0.9);
-}
-
-void MainWindow::printMaze(){
-
 }
 
 void MainWindow::uncheck(){
@@ -163,6 +161,41 @@ void MainWindow::newLabirynth(){
         connect(ui->buttonRandom, SIGNAL(clicked(bool)), lw, SLOT(toggleRandomEdge()));
         connect(lw, SIGNAL(success()), this, SLOT(uncheck()));
     }
+}
+
+void MainWindow::save(){
+    QString preferred = "/";
+    preferred += m_fileName.isEmpty() ? "labirynth.ms" : m_fileName;
+    QString fileName = QFileDialog::getSaveFileName(this, "Save file", QStandardPaths::writableLocation(QStandardPaths::HomeLocation)+preferred, "MazeSolver files (*.ms)");
+    if(fileName.isEmpty()) return;
+    if(fileName.right(3) != ".ms") fileName += ".ms";
+    QFile file(fileName);
+    if(!file.open(QIODevice::WriteOnly)){
+        QMessageBox::warning(this, "Warning!", "Cannot open file!");
+        return;
+    }
+    QDataStream out(&file);
+    out<<lw->width()<<lw->height()<<lw->graph();
+    file.flush();
+    file.close();
+    return;
+}
+
+void MainWindow::load(){
+    QMessageBox::warning(this, "Warning!", "If you open new file unsaved data will be lost!");
+    QString fileName = QFileDialog::getOpenFileName(this, "Open file", QStandardPaths::writableLocation(QStandardPaths::HomeLocation), "MazeSolver files (*.ms)");
+    if(fileName.isEmpty()) return;
+    QFile file(fileName);
+    if(!file.open(QIODevice::ReadOnly)){
+        QMessageBox::warning(this, "Warning!", "Cannot open file!");
+        return;
+    }
+    QDataStream in(&file);
+    int width, height;
+    Graf g;
+    in>>width>>height>>g;
+    lw->setGraph(g, width, height);
+    file.close();
 }
 
 MainWindow::~MainWindow(){

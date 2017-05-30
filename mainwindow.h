@@ -22,11 +22,11 @@ private:
     AbstractAlgorithm *m_algorithm = nullptr;
     int m_delay;
     bool m_canGo = true;
+    QString m_fileName;
 
 public slots:
     void zoomIn();
     void zoomOut();
-    void printMaze();
     void uncheck();
     void tabClicked(int index);
     bool step();
@@ -35,6 +35,8 @@ public slots:
     void algorithmSelected(int index);
     void speedSelected(int index);
     void newLabirynth();
+    void save();
+    void load();
 };
 
 #endif // MAINWINDOW_H

@@ -13,19 +13,21 @@
 class LabiryntView : public QObject {
     Q_OBJECT
 public:
-    explicit LabiryntView(int x, int y, QGraphicsView *view, QObject *parent = 0);
+    explicit LabiryntView(int w, int h, QGraphicsView *view, QObject *parent = 0);
 
     Graf graph();
-    void setGraph(Graf g);
+    void setGraph(Graf g, int w, int h);
     void setPath(QList<int> path);
     void setVisitedList(QList<int> list);
-    void redraw();
 
     bool editable() const;
     void setEditable(bool editable);
 
     int start();
     int end();
+
+    int width() const;
+    int height() const;
 
 signals:
     void success();
@@ -38,17 +40,17 @@ public slots:
     void toggleRandomEdge();
 
 private:
+    void redraw(int w, int h);
     void setType(FieldType type);
     void edgeMode(bool active);
     void setFieldsType(FieldType type);
     int m_width;
     int m_height;
     QGraphicsView *m_view;
-    QGraphicsScene *m_scene;
+    QGraphicsScene *m_scene = nullptr;
     QVector<MazeLine*> m_edges;
     QVector<MazeField*> m_fields;
 
-    Graf m_graf;
     QList<int> m_path;
     QList<int> m_visited;
 

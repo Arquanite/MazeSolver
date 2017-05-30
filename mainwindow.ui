@@ -302,11 +302,6 @@
             </item>
             <item>
              <property name="text">
-              <string>Autistic First</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
               <string>Random First</string>
              </property>
             </item>

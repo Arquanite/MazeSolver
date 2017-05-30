@@ -1,6 +1,64 @@
 #include "labiryntview.h"
 
-LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) : QObject(parent), m_width(x), m_height(y), m_view(view){
+LabiryntView::LabiryntView(int w, int h, QGraphicsView *view, QObject *parent) : QObject(parent), m_width(w), m_height(h), m_view(view){
+    redraw(w,h);
+}
+
+Graf LabiryntView::graph(){
+    Graf g;
+    for(int i=0; i<m_width*m_height; i++){
+        g.append(QList<int>());
+    }
+    for(MazeLine *l : m_edges){
+        if(!l->active()){
+            g[l->data(First).toInt()].append(l->data(Second).toInt());
+            g[l->data(Second).toInt()].append(l->data(First).toInt());
+        }
+    }
+    for(int i=0; i<g.size(); i++){
+        QString lol;
+        for(int j=0; j<g.at(i).size(); j++){
+            lol.append(QString::number(g.at(i).at(j))+" ");
+        }
+    }
+    return g;
+}
+
+void LabiryntView::setGraph(Graf g, int w, int h){
+    redraw(w, h);
+    for(int i=0; i<g.size(); i++){
+        for(int j=0; j<g.at(i).size(); j++){
+            for(MazeLine *l : m_edges){
+                if((l->data(First) == i && l->data(Second) == g.at(i).at(j)) ||
+                        (l->data(Second) == i && l->data(First) == g.at(i).at(j))){
+                    l->setActive(false);
+                }
+            }
+        }
+    }
+}
+
+void LabiryntView::setPath(QList<int> path){
+    setNormal();
+    m_path = path;
+    for(int i : path){
+        m_fields[i]->waitFor(FieldType::Path);
+    }
+}
+
+void LabiryntView::setVisitedList(QList<int> list){
+    m_visited = list;
+    for(int i : list){
+        m_fields[i]->waitFor(FieldType::Visited);
+    }
+}
+
+void LabiryntView::redraw(int w, int h){
+    m_width = w;
+    m_height = h;
+    m_edges.clear();
+    m_fields.clear();
+    delete m_scene;
     m_scene = new QGraphicsScene(this);
     m_view->setScene(m_scene);
 
@@ -52,45 +110,6 @@ LabiryntView::LabiryntView(int x, int y, QGraphicsView *view, QObject *parent) :
     edgeMode(true);
 }
 
-Graf LabiryntView::graph(){
-    m_graf.clear();
-    for(int i=0; i<m_width*m_height; i++){
-        m_graf.append(QList<int>());
-    }
-    for(MazeLine *l : m_edges){
-        if(!l->active()){
-            m_graf[l->data(First).toInt()].append(l->data(Second).toInt());
-            m_graf[l->data(Second).toInt()].append(l->data(First).toInt());
-        }
-    }
-    for(int i=0; i<m_graf.size(); i++){
-        QString lol;
-        for(int j=0; j<m_graf.at(i).size(); j++){
-            lol.append(QString::number(m_graf.at(i).at(j))+" ");
-        }
-    }
-    return m_graf;
-}
-
-void LabiryntView::setGraph(Graf g){
-    m_graf = g;
-}
-
-void LabiryntView::setPath(QList<int> path){
-    setNormal();
-    m_path = path;
-    for(int i : path){
-        m_fields[i]->waitFor(FieldType::Path);
-    }
-}
-
-void LabiryntView::setVisitedList(QList<int> list){
-    m_visited = list;
-    for(int i : list){
-        m_fields[i]->waitFor(FieldType::Visited);
-    }
-}
-
 void LabiryntView::setNormal(){
     setType(FieldType::Normal);
 }
@@ -131,13 +150,22 @@ void LabiryntView::edgeMode(bool active){
     }
 }
 
+int LabiryntView::height() const
+{
+    return m_height;
+}
+
+int LabiryntView::width() const
+{
+    return m_width;
+}
+
 bool LabiryntView::editable() const {
     return m_editable;
 }
 
 void LabiryntView::setEditable(bool editable){
     edgeMode(editable);
-    //if(editable) setNormal();
     setNormal();
     m_editable = editable;
 }
