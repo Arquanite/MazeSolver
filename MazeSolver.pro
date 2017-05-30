@@ -22,25 +22,27 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += $$PWD/src
+INCLUDEPATH += $$PWD/headers
 
-SOURCES += main.cpp\
-        mainwindow.cpp \
-    mazeline.cpp \
-    mazefield.cpp \
-    labiryntview.cpp \
-    abstractalgorithm.cpp \
-    dfsearch.cpp \
-    randomfirst.cpp \
-    bfsearch.cpp
+SOURCES += src/main.cpp \
+        src/mainwindow.cpp \
+    src/mazeline.cpp \
+    src/mazefield.cpp \
+    src/labiryntview.cpp \
+    src/abstractalgorithm.cpp \
+    src/dfsearch.cpp \
+    src/randomfirst.cpp \
+    src/bfsearch.cpp
 
-HEADERS  += mainwindow.h \
-    mazeline.h \
-    mazefield.h \
-    graf.h \
-    labiryntview.h \
-    abstractalgorithm.h \
-    dfsearch.h \
-    randomfirst.h \
-    bfsearch.h
+HEADERS  += headers/mainwindow.h \
+    headers/mazeline.h \
+    headers/mazefield.h \
+    headers/graf.h \
+    headers/labiryntview.h \
+    headers/abstractalgorithm.h \
+    headers/dfsearch.h \
+    headers/randomfirst.h \
+    headers/bfsearch.h
 
-FORMS    += mainwindow.ui
+FORMS    += forms/mainwindow.ui
