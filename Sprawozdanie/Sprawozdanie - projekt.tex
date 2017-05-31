@@ -129,8 +129,12 @@
 	zakończy działanie. \textbf{Nie znajduje on najkrótszej ścieżki.}
 	
 	\subsection{Przeszukiwanie wszerz (BFS, Breadth First)}
-	Algorytm działa następująco: odwiedza wszystkie nieodwiedzone pola
-	sąsiadujące z aktualnie odwiedzanym polem.
+	Algorytm działa następująco: w pętli dodaje wszystkich sąsiadów 
+	bieżącego pola do kolejki odwiedzając każde z nich oraz ustawia 
+	dla nich poprzednika. Następnie bierze pierwsze pole czekające w 
+	kolejce i wykonuje to samo. Wykonuje te czynności dopóki nie 
+	znajdzie pola końcowego lub wszystkie pola zostaną ozanczone jako 
+	odwiedzone.
 	\textbf{Znajduje on najkrótszą ścieżkę.}
 	
 	\subsection{Przeszukiwanie losowe (Random First)}
