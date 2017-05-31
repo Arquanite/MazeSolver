@@ -114,91 +114,129 @@
 			\item Dodatkowe: obsługa myszki
 		\end{enumerate}
 		
-	\section{Interfejs użytkownika}
+	\section{Instrukcja użytkowania}
 	
+	Żeby uruchomić program należy kliknąć dwukrotnie na jego ikonę.	
+	
+	TU BĘDZIE OBRAZEK	\\
+
+	Po uruchomieniu programu na ekranie wyświetli się główne okno
+	aplikacji.	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{obrazki/1.png}
-		\caption{Tmp}
+		\caption{Główne okno aplikacji}
 	\end{figure}
+	
+	Aby utworzyć labirynt, użytkownik ma dwie opcje:
+	\begin{enumerate}
+		\item Ręcznie klikać wybrane krawędzie aby je usunąć/przywrócić.
+		\item Kliknąć (i przytrzymać) przycisk \texttt{Random} - w tym
+			przypadku program będzie sam zmieniał stan losowych
+			krawędzi. Ta opcja nie gwarantuje, że labirynt będzie dało
+			się przejść.
+	\end{enumerate}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{obrazki/2.png}
-		\caption{Tmp}
+		\caption{Losowanie labiryntu}
 	\end{figure}
 	
+	W celu zmiany rozmiaru bądź wyzerowania labiryntu należy wcisnąć
+	przycisk \texttt{New}. Po jego kliknięciu wyskoczą okienka proszące
+	o wymiary labiryntu.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/4.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/5.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/6.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/7i8.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/9_new.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/10_new.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/11.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/12.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/13.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/14.png}
-		\caption{Tmp}
-	\end{figure}
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=0.8\linewidth]{obrazki/15.png}
-		\caption{Tmp}
+		\includegraphics[width=0.39\linewidth]{obrazki/14.png}
+		\includegraphics[width=0.40\linewidth]{obrazki/15.png}
+		\caption{Okienko szerokości (\texttt{Width}) oraz wysokości
+		(\texttt{Height})}
 	\end{figure}
 	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.8\linewidth]{obrazki/16.png}
-		\caption{Tmp}
+		\caption{Nowy labirynt o wymiarach 11x9}
 	\end{figure}
+	
+	Przed przejściem do przeszukiwania labirytu, należy zaznaczyć
+	pole startowe (zielone) oraz końcowe (czerwone). Bez tych pól
+	nie jest możliwe przechodzenie labiryntu.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/4.png}
+		\caption{Pole startowe i pole końcowe}
+	\end{figure}
+	
+	Tak wygląda okno aplikacji po kliknięciu karty \texttt{Solve}.
+	Oznacza to, że program przeszedł do etapu przechodzenia labiryntu.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/5.png}
+		\caption{Okno \texttt{Solve}}
+	\end{figure}
+	
+	W tym momencie użytkownik ma do wyboru kilka opcji. Jedną z nich
+	jest \texttt{Step}. Pozwala ona na wykonanie pojedynczego etapu
+	algorytmu (zwykle przejście jednego pola). Można również kliknąć
+	przycisk \texttt{Solve} - wykona on algorytm do momentu dojścia do 
+	końca.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/6.png}
+		\caption{Labirynt po kilkukrotnym użyciu \texttt{Step}}
+	\end{figure}
+	
+	W zależności od tego, czy labirynt da się przejść czy nie, aplikacja
+	zwróci nam odpowiedni komunikat.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/7i8.png}
+		\caption{Komunikaty ukończenia algorytmu}
+	\end{figure}
+	
+	
+	Użytkownik ma do wyboru trzy algorytmy: \texttt{Depth First},
+	\texttt{Breadth First} oraz \texttt{Random First}. Szczegółowy
+	opis poszczególnych algorytmów znajduje się w następnym rozdziale.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/9_new.png}
+		\caption{Wybór algorymtu}
+	\end{figure}
+	
+	
+	Można również zmienić prędkość funkcji \texttt{Solve}. W tym
+	przypadku mamy do wyboru \texttt{Slow}, \texttt{Normal},
+	\texttt{Fast} oraz \texttt{Very fast}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/10_new.png}
+		\caption{Wybór prędkości}
+	\end{figure}
+	
+	
+	Aplikacja umożliwia również skalowanie labiryntu przyciskami
+	\texttt{{+}} oraz \texttt{{-}}.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/11.png}
+		\caption{Oddalenie widoku}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/12.png}
+		\caption{Standardowy widok}
+	\end{figure}
+	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=0.8\linewidth]{obrazki/13.png}
+		\caption{Przybliżenie widoku}
+	\end{figure}
+	
 	
 	\section{Strategie przeszukiwania}
 	\subsection{Przeszukiwanie w głąb (DFS, Depth First)}
