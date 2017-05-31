@@ -1,0 +1,11 @@
+\BOOKMARK [1][-]{section.1}{Wstep}{}% 1
+\BOOKMARK [1][-]{section.2}{Wymagania systemowe}{}% 2
+\BOOKMARK [1][-]{section.3}{Interfejs uzytkownika}{}% 3
+\BOOKMARK [1][-]{section.4}{Strategie przeszukiwania}{}% 4
+\BOOKMARK [2][-]{subsection.4.1}{Przeszukiwanie w g\233ab \(DFS, Depth First\)}{section.4}% 5
+\BOOKMARK [2][-]{subsection.4.2}{Przeszukiwanie wszerz \(BFS, Breadth First\)}{section.4}% 6
+\BOOKMARK [2][-]{subsection.4.3}{Przeszukiwanie losowe \(Random First\)}{section.4}% 7
+\BOOKMARK [1][-]{section.5}{Budowanie ze zr\363de\233}{}% 8
+\BOOKMARK [2][-]{subsection.5.1}{Preferowana metoda budowania}{section.5}% 9
+\BOOKMARK [3][-]{subsubsection.5.1.1}{Pobranie z internetu zestawu deweloperskiego Qt}{subsection.5.1}% 10
+\BOOKMARK [2][-]{subsection.5.2}{Alternatywna metoda budowania}{section.5}% 11
