@@ -17,10 +17,12 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
     if(m_queue.head() == m_end) {
         QList<int> temp;
         int node = m_preds.at(m_visited.indexOf(m_queue.head()));
+        temp.append(m_end);
         while(node != m_start) {
             temp.append(node);
             node = m_preds.at(m_visited.indexOf(node));
         }
+        temp.append(m_start);
         m_path = temp;
         return Finish;
     }
@@ -44,8 +46,11 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
             return Lost;
         }
         m_path.removeAll(current);
-        sasiedzi = m_graph.at(m_preds.at(m_visited.indexOf(current)));
-        deleteDeadEnd(sasiedzi, current);
+        int node = m_preds.at(m_visited.indexOf(current));
+        if (node != m_start) {
+            sasiedzi = m_graph.at(node);
+            deleteDeadEnd(sasiedzi, current);
+        }
         if (m_path.size() == 0) {
             m_path.clear();
             return Lost;
@@ -54,11 +59,13 @@ AbstractAlgorithm::AlgorithmState BFSearch::step() {
     }
     if(current == m_end) {
         QList<int> temp;
-        int node = m_preds.at(m_visited.indexOf(current));
+        int node = m_preds.at(m_visited.indexOf(current));\
+        temp.append(m_end);
         while(node != m_start) {
             temp.append(node);
             node = m_preds.at(m_visited.indexOf(node));
         }
+        temp.append(m_start);
         m_path = temp;
         return Finish;
     }

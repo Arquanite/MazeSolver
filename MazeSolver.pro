@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = MazeSolver
 TEMPLATE = app
 
+win32:RC_ICONS += res/icon_128.ico
+
 INCLUDEPATH += $$PWD/headers
 
 SOURCES += src/main.cpp \
@@ -34,3 +36,6 @@ HEADERS  += headers/mainwindow.h \
     headers/bfsearch.h
 
 FORMS    += forms/mainwindow.ui
+
+RESOURCES += \
+    res/resources.qrc
