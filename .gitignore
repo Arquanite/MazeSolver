@@ -15,7 +15,7 @@
 *.log
 *.gz
 *.toc
-
+*.pdf
 
 # Qt-es
 
