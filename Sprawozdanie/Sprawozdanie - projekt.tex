@@ -114,13 +114,22 @@
 			\item Dodatkowe: obsługa myszki
 		\end{enumerate}
 		
+	
+	\section{Postanowienia licencyjne}	
+	Program został wydany na Mniejszej Powszechnej Licencji Publicznej GNU 
+	(GNU Lesser General Public License) w wersji trzeciej (LGPLv3). Treść
+	licencji jest zawarta w pliku \texttt{LICENSE}, można ją też znaleźć
+	pod poniższym adresem.\\
+	\texttt{https://www.gnu.org/licenses/lgpl.txt}
+	
 	\section{Interfejs użytkownika}
 	
 	\section{Strategie przeszukiwania}
 	\subsection{Przeszukiwanie w głąb (DFS, Depth First)}
 	Algorytm działa następująco: jeśli ma możliwość pójścia dalej,
 	preferuje pola w kolejności: lewo, góra, prawo, dół. Następnie 
-	przechodzi do wybranego pola i ponownie wybiera preferowane pole. 
+	przechodzi do wybranego pola, oznacza je jako odwiedzone i ponownie
+	wybiera preferowane nieodwiedzone pole. 
 	Będzie on powtarzał te czynności do momentu odnalezienia 
 	pola końcowego lub do znalezienia się w ślepym zaułku. W takim	
 	wypadku cofa się do poprzedniego pola i sprawdza czy może pójść w 
@@ -134,8 +143,8 @@
 	\textbf{Znajduje on najkrótszą ścieżkę.}
 	
 	\subsection{Przeszukiwanie losowe (Random First)}
-	Algorytm działa następująco: wybiera losowe sąsiadujące pole, a
-	następnie do niego przechodzi. Powtarza tę czynność do momentu
+	Algorytm działa następująco: wybiera losowe, sąsiadujące, nieodwiedzone pole,
+	a następnie do niego przechodzi. Powtarza tę czynność do momentu
 	odnalezienia pola końcowego lub znalezienia się w ślepym zaułku. W 
 	takim wypadku cofa się do poprzedniego pola i sprawdza czy może
 	pójść w inną (losową) stronę. Jeżeli nie - znowu się cofa. W 
@@ -145,6 +154,49 @@
 	
 	\section{Budowanie ze źródeł}
 
+	\subsection{Pobieranie źródeł programu}
+	Należy przejść pod podany adres i pobrać kod źródłowy programu.\\
+	\texttt{https://github.com/Arquanite/MazeSolver}
+	\subsection{Preferowana metoda budowania}
+
+	\subsubsection{Pobranie z internetu zestawu deweloperskiego Qt}
+	Należy przejść na stronę domową Qt i pobrać wersję open source odpowiednią
+	dla używanego systemu operacyjnego.\\
+	\texttt{https://www.qt.io/download-open-source/}\\
+	Następnie używając pobranego instalatora zainstalować Qt w systemie.	
+
+	\subsubsection{Otwarcie projektu w Qt Creatorze}
+	Należy wybrać z menu \texttt{Plik} akcję \texttt{Otwórz plik lub projekt...},
+	a następnie odnaleźć plik \texttt{MazeSolver.pro} znajdujący się w katalogu ze
+	źródłami.
+	
+	\subsubsection{Budowanie projektu}
+	Należy kliknąć zieloną strzałkę na pasku po lewej stronie, bądź użyć
+	skrótu klawiaturowego \texttt{Ctrl+R}. Po skompilowaniu powinno ukazać
+	się okno główne programu.
+
+	\subsection{Alternatywna metoda budowania}
+	
+	Mając zainstalowane w systemie kompilator \texttt{gcc}, system budowania
+	\texttt{qmake}, oraz wymagane biblioteki Qt, można zbudować projekt używając
+	następujących poleceń w katalogu ze źródłami.\\
+	\texttt{> qmake}\\
+	\texttt{> make} \\
+	\texttt{> ./MazeSolver} \\
+	
+	\subsection{Używanie programu na innych komputerach}
+	Przed skopiowaniem pliku wykonywalnego na inny komputer należy upewnić się,
+	że wraz w ww. plikiem załączone zostały wszystkie potrzebne biblioteki, w
+	przeciwnym wypadku program nie uruchomi się.\\
+	
+	W przypadku systemów z rodziny \texttt{MS Windows} najprościej uruchamiać
+	program, a następnie kopiować brakujące biblioteki z katalogu Qt do momentu, w
+	którym program się uruchomi.\\
+	
+	W przypadku systemów z rodziny \texttt{GNU/Linux} domyślnie biblioteki z 
+	bieżącego katalogu nie są ładowane przy uruchamianiu programu - muszą być
+	zainstalowane w systemie. Z pomocą polecenia \texttt{ldd} można sprawdzić
+	jakich bibliotek brakuje i umieścić je w odpowiednim katalogu (np. \texttt{/usr/local/lib}).
 
 
 \end{document}
