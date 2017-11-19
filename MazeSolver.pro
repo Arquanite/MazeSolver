@@ -15,6 +15,24 @@ win32:RC_ICONS += res/icon_128.ico
 
 INCLUDEPATH += $$PWD/headers
 
+TARGET = MazeSolver
+
+isEmpty(PREFIX) {
+    PREFIX = /usr/local
+}
+
+target.path = $$PREFIX/bin
+INSTALLS += target
+
+shortcutfiles.files = res/mazesolver.desktop
+shortcutfiles.path = $$PREFIX/share/applications/
+INSTALLS += shortcutfiles
+
+iconfile.files = res/mazesolver.png
+iconfile.path = $$PREFIX/share/icons/hicolor/48x48/apps/
+INSTALLS += iconfile
+
+
 SOURCES += src/main.cpp \
         src/mainwindow.cpp \
     src/mazeline.cpp \
